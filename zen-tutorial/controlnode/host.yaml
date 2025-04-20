@@ -1,0 +1,32 @@
+---
+all:
+  vars:
+    ansible_user: root
+    ansible_password: password
+  hosts:
+    marutamachi:
+      ansible_host: 192.168.111.101
+  children:
+    web:
+      vars:
+        http_port: 8080
+      hosts:
+        takeyamachi:
+          ansible_host: 192.168.111.102
+        ebisugawa:
+          ansible_host: 192.168.111.103
+        nijyo:
+          ansible_host: 192.168.111.104
+    mail:
+      hosts:
+        nijyo:
+    database:
+      vars:
+        db_port: 1521
+        db_user: scott
+        db_password: tiger
+      hosts:
+        oshikoji:
+          ansible_host: 192.168.111.105
+        oike:
+          ansible_host: 192.168.111.106

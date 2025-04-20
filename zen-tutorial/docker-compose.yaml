@@ -1,0 +1,59 @@
+services:
+  ansible:
+    container_name: ansible
+    image: ghcr.io/ansible-community/community-ee-base:latest
+    volumes:
+      - ./controlnode/:/runner/:ro
+    networks:
+      ansible_zen_tutorial_net:
+    environment:
+      - ANSIBLE_CONFIG=/runner/ansible.cfg
+  marutamachi:
+    build:
+      context: host
+    container_name: marutamachi
+    networks:
+      ansible_zen_tutorial_net:
+        ipv4_address: 192.168.111.101
+  takeyamachi:
+    build:
+      context: host
+    container_name: takeyamachi
+    networks:
+      ansible_zen_tutorial_net:
+        ipv4_address: 192.168.111.102
+  ebisugawa:
+    build:
+      context: host
+    container_name: ebisugawa
+    networks:
+      ansible_zen_tutorial_net:
+        ipv4_address: 192.168.111.103
+  nijyo:
+    build:
+      context: host
+    container_name: nijyo
+    networks:
+      ansible_zen_tutorial_net:
+        ipv4_address: 192.168.111.104
+  oshikoji:
+    build:
+      context: host
+    container_name: oshikoji
+    networks:
+      ansible_zen_tutorial_net:
+        ipv4_address: 192.168.111.105
+  oike:
+    build:
+      context: host
+    container_name: oike
+    networks:
+      ansible_zen_tutorial_net:
+        ipv4_address: 192.168.111.106
+
+networks:
+  ansible_zen_tutorial_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.111.0/24
