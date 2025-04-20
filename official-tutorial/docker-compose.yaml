@@ -1,0 +1,38 @@
+services:
+  ansible:
+    container_name: ansible
+    image: ghcr.io/ansible-community/community-ee-base:latest
+    volumes:
+      - ./controlnode/:/runner/:ro
+    networks:
+      ansible_tutorial_net:
+    environment:
+      - ANSIBLE_CONFIG=/runner/ansible.cfg
+  myhost1:
+    build:
+      context: host
+    container_name: myhost1
+    networks:
+      ansible_tutorial_net:
+        ipv4_address: 192.0.2.50
+  myhost2:
+    build:
+      context: host
+    container_name: myhost2
+    networks:
+      ansible_tutorial_net:
+        ipv4_address: 192.0.2.51
+  myhost3:
+    build:
+      context: host
+    container_name: myhost3
+    networks:
+      ansible_tutorial_net:
+        ipv4_address: 192.0.2.52
+
+networks:
+  ansible_tutorial_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.0.2.0/24
