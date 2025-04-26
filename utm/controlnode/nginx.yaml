@@ -5,3 +5,4 @@ all:
       ansible_host: 192.168.64.8
       ansible_user: toshi
       ansible_password: password
+      ansible_python_interpreter: /usr/bin/python3.8
