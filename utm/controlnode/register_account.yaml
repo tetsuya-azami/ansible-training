@@ -1,0 +1,21 @@
+- name: Register an account on the managed node.
+  hosts: all
+  gather_facts: no
+
+  vars_files:
+    - ./vars/accounts.yaml
+
+  vars_prompt:
+    - name: yn
+      prompt: "Do you want to register an account? (y/n)"
+      private: no
+
+  tasks:
+    - name: Register an account.
+      ansible.builtin.user:
+        name: "{{ item['name'] }}"
+        password: "{{ item['password'] | password_hash('sha512') }}"
+        state: present
+      loop: "{{ accounts }}"
+      become: yes
+      when: yn == "y"

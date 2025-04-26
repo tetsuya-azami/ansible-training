@@ -1,0 +1,8 @@
+---
+accounts:
+  - name: taro
+    password: password@taro
+  - name: jiro
+    password: password@jiro
+  - name: riki
+    password: password@riki
