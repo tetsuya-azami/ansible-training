@@ -1,0 +1,25 @@
+---
+- name: Install Webmin.
+  hosts: webmin
+  gather_facts: false
+  become: true
+  tasks:
+    - name: Download Webmin GPG key
+      ansible.builtin.get_url:
+        url: https://webmin.com/jcameron-key.asc
+        dest: /usr/share/keyrings/webmin.asc
+        mode: '0644'
+    - name: Add Webmin repository
+      ansible.builtin.apt_repository:
+        repo: deb [signed-by=/usr/share/keyrings/webmin.asc] http://download.webmin.com/download/repository sarge contrib
+        filename: webmin
+        state: present
+    - name: Install Webmin
+      ansible.builtin.apt:
+        name: webmin
+        state: present
+    - name: Allow Webmin in the firewall
+      become: true
+      community.general.ufw:
+        rule: allow
+        to_port: 10000
