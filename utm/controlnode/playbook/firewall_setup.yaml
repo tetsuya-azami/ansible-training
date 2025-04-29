@@ -2,6 +2,11 @@
   hosts: node
   become: true
   gather_facts: false
+  vars:
+    alllowed_ports:
+      - 22
+      - 80
+      - 10000
   tasks:
     - name: Set logging
       community.general.ufw:
@@ -13,9 +18,8 @@
     - name: Allow ports
       community.general.ufw:
         rule: allow
-        to_port: "{{ item.port_number }}"
+        to_port: "{{ allowed_port }}"
       notify: Restart ufw service
-      loop:
-        - port_number: 22
-        - port_number: 80
-        - port_number: 10000
+      loop: "{{ alllowed_ports }}"
+      loop_control:
+        loop_var: allowed_port
