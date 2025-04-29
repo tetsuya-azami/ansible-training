@@ -1,0 +1,19 @@
+- name: Read CSV and Register Accounts
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Read users from CSV file and return a dictionary
+      community.general.read_csv:
+        path: ../resources/accounts.csv
+        delimiter: ','
+      register: users
+      delegate_to: localhost
+    - name: Register Accounts
+      ansible.builtin.user:
+        name: "{{ user.name }}"
+        password: "{{ user.password | password_hash('sha512') }}"
+        state: present
+      loop: "{{ users.list }}"
+      loop_control:
+        loop_var: user
+      become: yes
