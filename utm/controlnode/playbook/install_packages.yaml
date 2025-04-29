@@ -1,0 +1,19 @@
+- name: Install packages
+  hosts: node
+  become: true
+  tasks:
+    - name: Install nginx
+      ansible.builtin.apt:
+        name: nginx
+        state: present
+      notify: Start nginx service
+    - name: Install firewall package
+      ansible.builtin.apt:
+        name: ufw
+        state: present
+      notify: Start ufw service
+    - name: Install Webmin
+      ansible.builtin.apt:
+        name: webmin
+        state: present
+      notify: Start Webmin service

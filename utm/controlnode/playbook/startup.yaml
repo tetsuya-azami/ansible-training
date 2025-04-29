@@ -1,0 +1,32 @@
+---
+- name: Start Up node
+  hosts: node
+  gather_facts: no
+
+  handlers:
+    - name: Start nginx service
+      become: true
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: true
+    - name: Start ufw service
+      become: true
+      ansible.builtin.service:
+        name: ufw
+        state: started
+        enabled: true
+    - name: Start Webmin service
+      become: true
+      ansible.builtin.service:
+        name: webmin
+        state: started
+        enabled: true
+    - name: Restart ufw service
+      become: true
+      ansible.builtin.service:
+        name: ufw
+        state: restarted
+
+- ansible.builtin.import_playbook: install_packages.yaml
+- ansible.builtin.import_playbook: firewall_setup.yaml

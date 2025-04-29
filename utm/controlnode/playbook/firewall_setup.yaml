@@ -1,0 +1,21 @@
+- name: Configure UFW Firewall
+  hosts: node
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Set logging
+      community.general.ufw:
+        logging: 'on'
+    - name: Deny everything and enable UFW
+      community.general.ufw:
+        state: enabled
+        policy: deny
+    - name: Allow ports
+      community.general.ufw:
+        rule: allow
+        to_port: "{{ item.port_number }}"
+      notify: Restart ufw service
+      loop:
+        - port_number: 22
+        - port_number: 80
+        - port_number: 10000
