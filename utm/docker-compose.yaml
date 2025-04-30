@@ -3,6 +3,6 @@ services:
     container_name: ansible
     image: ghcr.io/ansible-community/community-ee-base:latest
     volumes:
-      - ./controlnode:/runner/:ro
+      - ./controlnode:/runner/
     environment:
       - ANSIBLE_CONFIG=/runner/ansible.cfg

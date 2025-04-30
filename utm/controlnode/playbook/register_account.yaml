@@ -3,7 +3,7 @@
   gather_facts: no
 
   vars_files:
-    - ./vars/accounts.yaml
+    - ../vars/accounts.yaml
 
   vars_prompt:
     - name: yn
